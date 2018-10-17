@@ -4,4 +4,7 @@
  */
 import React from 'react';
 
-export default () => <div />;
+export default () => {
+  window.location.href = '/components/button-cn/';
+  return <div />;
+};

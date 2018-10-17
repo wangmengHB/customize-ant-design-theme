@@ -1,7 +1,7 @@
 require('core-js/es6/string');
 const path = require('path');
 
-const homeTmpl = './template/Home/index';
+
 const contentTmpl = './template/Content/index';
 const redirectTmpl = './template/Redirect';
 const appShellTmpl = './template/AppShell';
@@ -57,36 +57,12 @@ module.exports = {
   routes: {
     path: '/',
     component: './template/Layout/index',
-    indexRoute: { component: homeTmpl },
+    indexRoute: { component: appShellTmpl },
     childRoutes: [{
       path: 'app-shell',
       component: appShellTmpl,
     }, {
-      path: 'index-cn',
-      component: homeTmpl,
-    }, {
-      path: 'docs/pattern/:children',
-      component: redirectTmpl,
-    }, {
-      path: 'docs/react/:children',
-      component: contentTmpl,
-    }, {
-      path: 'changelog',
-      component: contentTmpl,
-    }, {
-      path: 'changelog-cn',
-      component: contentTmpl,
-    }, {
-      path: 'components/:children/',
-      component: contentTmpl,
-    }, {
-      path: 'docs/spec/feature',
-      component: redirectTmpl,
-    }, {
-      path: 'docs/spec/feature-cn',
-      component: redirectTmpl,
-    }, {
-      path: 'docs/spec/:children',
+      path: 'components/:children',
       component: contentTmpl,
     }, {
       path: 'docs/resource/:children',

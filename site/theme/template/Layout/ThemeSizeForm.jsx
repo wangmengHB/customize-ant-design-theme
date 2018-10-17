@@ -15,22 +15,21 @@ const formItemLayout = {
 
 const themes = [
   {
-    "id": "@font-size-base",
-    "value": "14px",
-    "label": "基准字体大小"
+    id: '@font-size-base',
+    value: '14px',
+    label: '基准字体大小',
   },
 
   {
-    "id": "@font-size-sm",
-    "value": "12px",
-    "label": "小号字体大小"
+    id: '@font-size-sm',
+    value: '12px',
+    label: '小号字体大小',
   },
-  
-]
+
+];
 
 
 class CustomizeThemeForm extends React.Component {
-  
   setTheme = () => {
     this.props.form.validateFields((err, values) => {
       console.log('Received values of form: ', values);
@@ -56,14 +55,14 @@ class CustomizeThemeForm extends React.Component {
   getFields() {
     const { getFieldDecorator } = this.props.form;
     const children = [];
-    themes.forEach((theme, index) => {
+    themes.forEach((theme) => {
       children.push(
-        <Col span={6} key={index}>
+        <Col span={6} key={theme.id}>
           <FormItem label={theme.label} {...formItemLayout}>
             {getFieldDecorator(theme.id, {
               initialValue: theme.value,
             })(
-              <Input placeholder="placeholder"/>
+              <Input placeholder="placeholder" />
             )}
           </FormItem>
         </Col>
@@ -75,13 +74,13 @@ class CustomizeThemeForm extends React.Component {
 
   componentDidMount() {
     this.setTheme();
-  } 
+  }
 
   render() {
     return (
       <Form
         onSubmit={this.handleSetTheme}
-        style={ { margin: '20px 80px 20px 0px' } }
+        style={{ margin: '20px 80px 20px 0px'  }}
       >
         <Row type="flex" justify="space-around" gutter={0}>{this.getFields()}</Row>
         <Row>
@@ -98,4 +97,4 @@ class CustomizeThemeForm extends React.Component {
 }
 
 
-export default Form.create()(CustomizeThemeForm)
+export default Form.create()(CustomizeThemeForm);

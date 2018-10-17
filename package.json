@@ -228,9 +228,6 @@
       "npm run lint-staged:demo"
     ]
   },
-  "pre-commit": [
-    "lint-staged"
-  ],
   "sideEffects": [
     "dist/*",
     "es/**/style/*",

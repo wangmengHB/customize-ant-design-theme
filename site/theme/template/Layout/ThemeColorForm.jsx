@@ -15,87 +15,84 @@ const formItemLayout = {
 
 const themes = [
   {
-    "id": "@primary-color",
-    "value": "#3FA3FF",
-    "label": "主题色"
+    id: '@primary-color',
+    value: '#3FA3FF',
+    label: '主题色',
   },
 
   {
-    "id": "@heading-color",
-    "value": "#333B4E",
-    "label": "标题色"
+    id: '@heading-color',
+    value: '#333B4E',
+    label: '标题色',
   },
   {
-    "id": "@text-color",
-    "value": "#666F80",
-    "label": "正文本色"
+    id: '@text-color',
+    value: '#666F80',
+    label: '正文本色',
   },
   {
-    "id": "@text-color-secondary",
-    "value": "#A6AEB5",
-    "label": "次文本色"
+    id: '@text-color-secondary',
+    value: '#A6AEB5',
+    label: '次文本色',
   },
   {
-    "id": "@input-placeholder-color",
-    "value": "#A6AEB5",
-    "label": "placeholder色"
+    id: '@input-placeholder-color',
+    value: '#A6AEB5',
+    label: 'placeholder色',
   },
 
   {
-    "id": "@success-color",
-    "value": "#7CE5CA",
-    "label": "成功色"
+    id: '@success-color',
+    value: '#7CE5CA',
+    label: '成功色',
   },
   {
-    "id": "@warning-color",
-    "value": "#FFC8B2",
-    "label": "警告色"
+    id: '@warning-color',
+    value: '#FFC8B2',
+    label: '警告色',
   },
 
   {
-    "id": "@border-color-base",
-    "value": "#DCE6EC",
-    "label": "边框基色"
+    id: '@border-color-base',
+    value: '#DCE6EC',
+    label: '边框基色',
   },
 
   {
-    "id": "@border-color-split",
-    "value": "#EEF4F9",
-    "label": "边框分隔色"
+    id: '@border-color-split',
+    value: '#EEF4F9',
+    label: '边框分隔色',
   },
 
   {
-    "id": "@shadow-color",
-    "value": "#EDF1F4",
-    "label": "阴影色"
+    id: '@shadow-color',
+    value: '#EDF1F4',
+    label: '阴影色',
   },
-  
-  
-  {
-    "id": "@background-color-light",
-    "value": "#F8F8F8",
-    "label": "header和选中的背景色"
-  },
-  
-  {
-    "id": "@table-selected-row-bg",
-    "value": "#40a9ff",
-    "label": "表格行选中背景色"
-  },
-  
-  {
-    "id": "@modal-mask-bg",
-    "value": "rgba(0, 0, 0, 0.2)",
-    "label": "mask背景色"
-  },
-  
-]
 
 
+  {
+    id: '@background-color-light',
+    value: '#F8F8F8',
+    label: 'header和选中的背景色',
+  },
+
+  {
+    id: '@table-selected-row-bg',
+    value: '#40a9ff',
+    label: '表格行选中背景色',
+  },
+
+  {
+    id: '@modal-mask-bg',
+    value: 'rgba(0, 0, 0, 0.2)',
+    label: 'mask背景色',
+  },
+
+];
 
 
 class CustomizeThemeForm extends React.Component {
-  
   setTheme = () => {
     this.props.form.validateFields((err, values) => {
       console.log('Received values of form: ', values);
@@ -128,7 +125,7 @@ class CustomizeThemeForm extends React.Component {
             {getFieldDecorator(theme.id, {
               initialValue: theme.value,
             })(
-              <Input placeholder="placeholder"/>
+              <Input placeholder="placeholder" />
             )}
           </FormItem>
         </Col>
@@ -146,7 +143,7 @@ class CustomizeThemeForm extends React.Component {
     return (
       <Form
         onSubmit={this.handleSetTheme}
-        style={ { margin: '20px 80px 20px 0px' } }
+        style={{ margin: '20px 80px 20px 0px' }}
       >
         <Row type="flex" justify="space-between" gutter={0}>{this.getFields()}</Row>
         <Row>
@@ -163,4 +160,4 @@ class CustomizeThemeForm extends React.Component {
 }
 
 
-export default Form.create()(CustomizeThemeForm)
+export default Form.create()(CustomizeThemeForm);

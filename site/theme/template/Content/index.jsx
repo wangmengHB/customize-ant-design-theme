@@ -2,16 +2,13 @@ import collect from 'bisheng/collect';
 import MainContent from './MainContent';
 import * as utils from '../utils';
 
-function isChangelog(pathname) {
-  return pathname.indexOf('changelog') >= 0;
-}
+
 
 export default collect(async (nextProps) => {
   const { pathname } = nextProps.location;
   const pageDataPath = pathname.replace('-cn', '').split('/');
-  const pageData = isChangelog(pathname)
-    ? nextProps.data.changelog.CHANGELOG
-    : nextProps.utils.get(nextProps.data, pageDataPath);
+  const pageData = nextProps.utils.get(nextProps.data, pageDataPath);
+  
   if (!pageData) {
     throw 404; // eslint-disable-line no-throw-literal
   }
