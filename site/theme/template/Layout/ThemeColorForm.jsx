@@ -94,8 +94,9 @@ const themes = [
 
 class CustomizeThemeForm extends React.Component {
   setTheme = () => {
-    this.props.form.validateFields((err, values) => {
-      console.log('Received values of form: ', values);
+    const { form: { validateFields } } = this.props;
+    validateFields((err, values) => {
+      window.console.log('Received values of form: ', values);
       window.less.modifyVars(values).then(() => {
         Icon.setTwoToneColor({ primaryColor: values['@primary-color'] });
         message.success('修改主题成功');
@@ -110,17 +111,18 @@ class CustomizeThemeForm extends React.Component {
   }
 
   handleReset = () => {
-    this.props.form.resetFields();
+    const { form } = this.props;
+    form.resetFields();
     this.setTheme();
   }
 
   // To generate mock Form.Item
   getFields() {
-    const { getFieldDecorator } = this.props.form;
+    const { form: { getFieldDecorator } } = this.props;
     const children = [];
-    themes.forEach((theme, index) => {
+    themes.forEach((theme) => {
       children.push(
-        <Col span={6} key={index}>
+        <Col span={6} key={theme.id}>
           <FormItem label={theme.label} {...formItemLayout}>
             {getFieldDecorator(theme.id, {
               initialValue: theme.value,
