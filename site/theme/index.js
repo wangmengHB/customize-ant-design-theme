@@ -30,7 +30,10 @@ module.exports = {
     components(markdownData) {
       const { filename } = markdownData.meta;
       if (!/^components/.test(filename)
-          || /[/\\]demo$/.test(path.dirname(filename))) return;
+        || /[/\\]demo$/.test(path.dirname(filename))
+      ) {
+        return;
+      }
 
       return {
         meta: markdownData.meta,
@@ -51,7 +54,7 @@ module.exports = {
   plugins: [
     'bisheng-plugin-description',
     'bisheng-plugin-toc?maxDepth=2&keepElem',
-    'bisheng-plugin-antd',
+    // 'bisheng-plugin-antd',
     'bisheng-plugin-react?lang=__react',
   ],
   routes: {
@@ -59,7 +62,7 @@ module.exports = {
     component: './template/Layout/index',
     indexRoute: { component: appShellTmpl },
     childRoutes: [{
-      path: 'app-shell',
+      path: 'index',
       component: appShellTmpl,
     }, {
       path: 'components/:children',

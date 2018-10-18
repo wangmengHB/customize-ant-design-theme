@@ -19,7 +19,6 @@ const themes = [
     value: '#3FA3FF',
     label: '主题色',
   },
-
   {
     id: '@heading-color',
     value: '#333B4E',
@@ -36,12 +35,6 @@ const themes = [
     label: '次文本色',
   },
   {
-    id: '@input-placeholder-color',
-    value: '#A6AEB5',
-    label: 'placeholder色',
-  },
-
-  {
     id: '@success-color',
     value: '#7CE5CA',
     label: '成功色',
@@ -53,30 +46,10 @@ const themes = [
   },
 
   {
-    id: '@border-color-base',
-    value: '#DCE6EC',
-    label: '边框基色',
-  },
-
-  {
-    id: '@border-color-split',
-    value: '#EEF4F9',
-    label: '边框分隔色',
-  },
-
-  {
     id: '@shadow-color',
     value: '#EDF1F4',
     label: '阴影色',
   },
-
-
-  {
-    id: '@background-color-light',
-    value: '#F8F8F8',
-    label: 'header和选中的背景色',
-  },
-
   {
     id: '@table-selected-row-bg',
     value: '#40a9ff',
