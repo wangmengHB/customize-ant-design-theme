@@ -33,8 +33,7 @@ function usePrettyWebpackBar(config) {
   // remove old progress plugin.
   config.plugins = config.plugins
     .filter((plugin) => {
-      return !(plugin instanceof webpack.ProgressPlugin)
-        && !(plugin instanceof WebpackBar);
+      return !(plugin instanceof webpack.ProgressPlugin) && !(plugin instanceof WebpackBar);
     });
 
   // use brand new progress bar.
