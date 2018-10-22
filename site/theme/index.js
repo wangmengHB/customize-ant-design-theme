@@ -6,20 +6,6 @@ const contentTmpl = './template/Content/index';
 const redirectTmpl = './template/Redirect';
 const appShellTmpl = './template/AppShell';
 
-function pickerGenerator(module) {
-  const tester = new RegExp(`^docs/${module}`);
-  return (markdownData) => {
-    const { filename } = markdownData.meta;
-    if (tester.test(filename) &&
-      !/\/demo$/.test(path.dirname(filename))
-    ) {
-      return {
-        meta: markdownData.meta,
-      };
-    }
-  };
-}
-
 module.exports = {
   lazyLoad(nodePath, nodeValue) {
     if (typeof nodeValue === 'string') {
@@ -35,7 +21,6 @@ module.exports = {
       ) {
         return;
       }
-
       return {
         meta: markdownData.meta,
       };
