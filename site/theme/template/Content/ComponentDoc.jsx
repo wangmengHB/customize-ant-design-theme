@@ -39,8 +39,8 @@ export default class ComponentDoc extends React.Component {
     const isSingleCol = meta.cols === 1;
     const leftChildren = [];
     const rightChildren = [];
-    const showedDemo = demos.some(demo => demo.meta.only)
-      ? demos.filter(demo => demo.meta.only) : demos.filter(demo => demo.preview);
+    const showedDemo = demos.some(demo => demo.meta.only) ?
+      demos.filter(demo => demo.meta.only) : demos.filter(demo => demo.preview);
     showedDemo.sort((a, b) => a.meta.order - b.meta.order)
       .forEach((demoData, index) => {
         const demoElem = (
@@ -66,6 +66,7 @@ export default class ComponentDoc extends React.Component {
     const jumper = showedDemo.map((demo) => {
       const { title } = demo.meta;
       const localizeTitle = title[locale] || title;
+      console.log(demo.meta.id);
       return (
         <li key={demo.meta.id} title={localizeTitle}>
           <a href={`#${demo.meta.id}`}>
@@ -114,9 +115,9 @@ export default class ComponentDoc extends React.Component {
           <Row gutter={16}>
             <Col span={isSingleCol ? '24' : '12'}
               className={
-                isSingleCol
-                  ? 'code-boxes-col-1-1'
-                  : 'code-boxes-col-2-1'
+                isSingleCol ?
+                  'code-boxes-col-1-1' :
+                  'code-boxes-col-2-1'
               }
             >
               {leftChildren}

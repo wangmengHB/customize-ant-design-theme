@@ -76,6 +76,8 @@ export default class Article extends React.Component {
     const { title, subtitle, filename } = meta;
     const { intl: { locale } } = this.context;
     const isNotTranslated = locale === 'en-US' && typeof title === 'object';
+    console.log(content.toc);
+
     return (
       <DocumentTitle title={`${title[locale] || title} - Ant Design`}>
         <article className="markdown" ref={(node) => { this.node = node; }}>
@@ -93,16 +95,16 @@ export default class Article extends React.Component {
           <h1>
             {title[locale] || title}
             {
-              !subtitle || locale === 'en-US'
-                ? null
-                : <span className="subtitle">{subtitle}</span>
+              !subtitle || locale === 'en-US' ?
+                null :
+                <span className="subtitle">{subtitle}</span>
             }
             <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={filename} />
           </h1>
           {
-            !description
-              ? null
-              : props.utils.toReactComponent(
+            !description ?
+              null :
+              props.utils.toReactComponent(
                 ['section', { className: 'markdown' }].concat(getChildren(description))
               )
           }

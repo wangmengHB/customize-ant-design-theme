@@ -12,18 +12,18 @@ const { SubMenu } = Menu;
 
 function getActiveMenuItem(props) {
   const { children } = props.params;
-  return (children && children.replace('-cn', ''))
-    || props.location.pathname.replace(/(^\/|-cn$)/g, '');
+  return (children && children.replace('-cn', '')) || props.location.pathname.replace(/(^\/|-cn$)/g, '');
 }
 
 function getModuleData(props) {
   const { pathname } = props.location;
-  const moduleName = /^\/?components/.test(pathname)
-    ? 'components' : pathname.split('/').filter(item => item).slice(0, 2).join('/');
-  const moduleData = moduleName === 'components' || moduleName === 'docs/react'
-    || moduleName === 'changelog' || moduleName === 'changelog-cn'
-    ? [...props.picked.components, ...props.picked['docs/react'], ...props.picked.changelog]
-    : props.picked[moduleName];
+  const moduleName = /^\/?components/.test(pathname) ?
+    'components' :
+    pathname.split('/').filter(item => item).slice(0, 2).join('/');
+  const moduleData = (moduleName === 'components' || moduleName === 'docs/react' ||
+    moduleName === 'changelog' || moduleName === 'changelog-cn') ?
+    [...props.picked.components, ...props.picked['docs/react'], ...props.picked.changelog] :
+    props.picked[moduleName];
   const excludedSuffix = utils.isZhCN(props.location.pathname) ? 'en-US.md' : 'zh-CN.md';
   return moduleData.filter(({ meta }) => !meta.filename.endsWith(excludedSuffix));
 }
@@ -263,9 +263,9 @@ export default class MainContent extends React.Component {
           )}
           <Col xxl={20} xl={19} lg={18} md={24} sm={24} xs={24} className={mainContainerClass}>
             {
-              props.demos
-                ? <ComponentDoc {...props} doc={localizedPageData} demos={props.demos} />
-                : <Article {...props} content={localizedPageData} />
+              props.demos ?
+                <ComponentDoc {...props} doc={localizedPageData} demos={props.demos} /> :
+                <Article {...props} content={localizedPageData} />
             }
           </Col>
         </Row>
@@ -281,14 +281,14 @@ export default class MainContent extends React.Component {
           >
             <section className="prev-next-nav">
               {
-                prev
-                  ? React.cloneElement(prev.props.children || prev.children[0], { className: 'prev-page' })
-                  : null
+                prev ?
+                  React.cloneElement(prev.props.children || prev.children[0], { className: 'prev-page' }) :
+                  null
               }
               {
-                next
-                  ? React.cloneElement(next.props.children || next.children[0], { className: 'next-page' })
-                  : null
+                next ?
+                  React.cloneElement(next.props.children || next.children[0], { className: 'next-page' }) :
+                  null
               }
             </section>
           </Col>

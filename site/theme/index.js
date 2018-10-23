@@ -66,6 +66,9 @@ module.exports = {
       }, {
         path: 'components/:children',
         component: contentTmpl,
+      }, {
+        path: 'components/:children/',
+        component: contentTmpl,
       },
     ],
   },

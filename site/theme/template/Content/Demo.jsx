@@ -42,15 +42,15 @@ export default class Demo extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { codeExpand, copied, copyTooltipVisible } = this.state;
     const { expand } = this.props;
-    return (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand)
-      || copied !== nextState.copied
-      || copyTooltipVisible !== nextState.copyTooltipVisible;
+    return (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand) ||
+      copied !== nextState.copied ||
+      copyTooltipVisible !== nextState.copyTooltipVisible;
   }
 
   componentDidMount() {
     const { meta, location } = this.props;
     if (meta.id === location.hash.slice(1)) {
-      this.anchor.click();
+      window.location.href = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
     }
     this.componentWillReceiveProps(this.props);
 
@@ -66,10 +66,6 @@ export default class Demo extends React.Component {
   handleCodeExpand = () => {
     const { codeExpand } = this.state;
     this.setState({ codeExpand: !codeExpand });
-  }
-
-  saveAnchor = (anchor) => {
-    this.anchor = anchor;
   }
 
   handleCodeCopied = () => {
@@ -104,9 +100,9 @@ export default class Demo extends React.Component {
     } = props;
     const { showRiddleButton, copied } = state;
     if (!this.liveDemo) {
-      this.liveDemo = meta.iframe
-        ? <BrowserFrame><iframe src={src} height={meta.iframe} title="demo" /></BrowserFrame>
-        : preview(React, ReactDOM);
+      this.liveDemo = meta.iframe ?
+        <BrowserFrame><iframe src={src} height={meta.iframe} title="demo" /></BrowserFrame> :
+        preview(React, ReactDOM);
     }
     const codeExpand = state.codeExpand || expand;
     const codeBoxClass = classNames({
@@ -190,14 +186,14 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             {this.liveDemo}
           </ErrorBoundary>
           {
-            style
-              ? <style dangerouslySetInnerHTML={{ __html: style }} />
-              : null
+            style ?
+              <style dangerouslySetInnerHTML={{ __html: style }} /> :
+              null
           }
         </section>
         <section className="code-box-meta markdown">
           <div className="code-box-title">
-            <a href={`#${meta.id}`} ref={this.saveAnchor}>
+            <a href={`#${meta.id}`}>
               {localizedTitle}
             </a>
             <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={meta.filename} />
@@ -269,8 +265,8 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             {props.utils.toReactComponent(highlightedCode)}
           </div>
           {
-            highlightedStyle
-              ? (
+            highlightedStyle ?
+              (
                 <div key="style" className="highlight">
                   <pre>
                     <code className="css" dangerouslySetInnerHTML={{ __html: highlightedStyle }} />
