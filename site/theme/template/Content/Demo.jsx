@@ -104,7 +104,7 @@ export default class Demo extends React.Component {
       location,
     } = props;
 
-    const {basename, pathname} = location;
+    const { pathname } = location;
 
     const { showRiddleButton, copied } = state;
     if (!this.liveDemo) {
@@ -201,7 +201,7 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         </section>
         <section className="code-box-meta markdown">
           <div className="code-box-title">
-            <a href={`${basename}${pathname}#${meta.id}`} ref={this.saveAnchor}>
+            <a href={`${pathname}#${meta.id}`} ref={this.saveAnchor}>
               {localizedTitle}
             </a>
             <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={meta.filename} />

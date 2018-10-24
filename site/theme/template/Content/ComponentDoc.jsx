@@ -35,7 +35,7 @@ export default class ComponentDoc extends React.Component {
     const { intl: { locale } } = this.context;
     const demos = Object.keys(props.demos).map(key => props.demos[key]);
     const { expandAll } = this.state;
-    const { basename, pathname } = location;
+    const { pathname } = location;
 
     const isSingleCol = meta.cols === 1;
     const leftChildren = [];
@@ -69,7 +69,7 @@ export default class ComponentDoc extends React.Component {
       const localizeTitle = title[locale] || title;
       return (
         <li key={demo.meta.id} title={localizeTitle}>
-          <a href={`${basename}${pathname}#${demo.meta.id}`}>
+          <a href={`${pathname}#${demo.meta.id}`}>
             {localizeTitle}
           </a>
         </li>
