@@ -50,7 +50,7 @@ export default class Demo extends React.Component {
   componentDidMount() {
     const { meta, location } = this.props;
     if (meta.id === location.hash.slice(1)) {
-      window.location.href = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
+      this.anchor.click();
     }
     this.componentWillReceiveProps(this.props);
 
@@ -66,6 +66,10 @@ export default class Demo extends React.Component {
   handleCodeExpand = () => {
     const { codeExpand } = this.state;
     this.setState({ codeExpand: !codeExpand });
+  }
+
+  saveAnchor = (anchor) => {
+    this.anchor = anchor;
   }
 
   handleCodeCopied = () => {
@@ -193,7 +197,7 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         </section>
         <section className="code-box-meta markdown">
           <div className="code-box-title">
-            <a href={`#${meta.id}`}>
+            <a href={`${window.location.origin}${window.location.pathname}#${meta.id}`} ref={this.saveAnchor}>
               {localizedTitle}
             </a>
             <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={meta.filename} />

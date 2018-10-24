@@ -66,10 +66,9 @@ export default class ComponentDoc extends React.Component {
     const jumper = showedDemo.map((demo) => {
       const { title } = demo.meta;
       const localizeTitle = title[locale] || title;
-      console.log(demo.meta.id);
       return (
         <li key={demo.meta.id} title={localizeTitle}>
-          <a href={`#${demo.meta.id}`}>
+          <a href={`${window.location.origin}${window.location.pathname}#${demo.meta.id}`}>
             {localizeTitle}
           </a>
         </li>
