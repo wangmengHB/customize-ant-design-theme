@@ -101,7 +101,11 @@ export default class Demo extends React.Component {
       style,
       highlightedStyle,
       expand,
+      location,
     } = props;
+
+    const {basename, pathname} = location;
+
     const { showRiddleButton, copied } = state;
     if (!this.liveDemo) {
       this.liveDemo = meta.iframe ?
@@ -197,7 +201,7 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         </section>
         <section className="code-box-meta markdown">
           <div className="code-box-title">
-            <a href={`${window.location.origin}${window.location.pathname}#${meta.id}`} ref={this.saveAnchor}>
+            <a href={`${basename}${pathname}#${meta.id}`} ref={this.saveAnchor}>
               {localizedTitle}
             </a>
             <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={meta.filename} />
