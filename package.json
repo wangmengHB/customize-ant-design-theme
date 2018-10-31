@@ -179,13 +179,11 @@
     "nprogress-for-antd": "^0.2.1"
   },
   "scripts": {
-    "test": "jest --config .jest.js",
+    "test1": "jest --config .jest.js",
     "start": "rimraf _site && mkdir _site && node ./scripts/generateColorLess.js && cross-env NODE_ENV=development bisheng start -c ./site/bisheng.config.js",
     "build:site": "node ./scripts/bisheng/bin/bisheng-build --ssr -c ./site/bisheng.config.js",
     "build:theme": "node ./scripts/theme/generateColorLess.js",
-    "site": "npm run build:site && npm run build:theme",
-    "debug:bisheng": "node ./node_modules/bisheng/bin/bisheng-build --ssr -c ./site/bisheng.config.js",
-    "debug:site": "bisheng build -c ./site/bisheng.config.js"
+    "site": "npm run build:site && npm run build:theme"
   },
   "sideEffects": [
     "dist/*",
