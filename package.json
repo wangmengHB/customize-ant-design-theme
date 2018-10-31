@@ -176,9 +176,6 @@
   },
   "scripts": {
     "test": "jest --config .jest.js",
-    "test-node": "jest --config .jest.node.js",
-    "test-all": "./scripts/test-all.sh",
-    
     "start": "rimraf _site && mkdir _site && node ./scripts/generateColorLess.js && cross-env NODE_ENV=development bisheng start -c ./site/bisheng.config.js",
     "start:preact": "node ./scripts/generateColorLess.js && cross-env NODE_ENV=development REACT_ENV=preact bisheng start -c ./site/bisheng.config.js",
     "site": "cross-env NODE_ENV=development bisheng build --ssr -c ./site/bisheng.config.js && node ./scripts/generateColorLess.js",
