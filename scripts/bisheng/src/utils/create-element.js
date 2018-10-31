@@ -5,9 +5,10 @@ const NProgress = require('nprogress-for-antd');
 
 module.exports = function createElement(Component, props) {
   NProgress.done();
-  const dynamicPropsKey = props.location.pathname;
+  const { location } = props;
+  const dynamicPropsKey = location.pathname;
   return React.createElement(Component, {
     ...props,
-    ...Component[dynamicPropsKey]
+    ...Component[dynamicPropsKey],
   });
 };

@@ -9,7 +9,9 @@ program
   .command('gh-pages [options]', 'to deploy website to gh-pages')
   .parse(process.argv);
 
-process.on('SIGINT', function() {
-  program.runningCommand && program.runningCommand.kill('SIGKILL');
+process.on('SIGINT', () => {
+  if (program.runningCommand) {
+    program.runningCommand.kill('SIGKILL');
+  }
   process.exit(0);
 });

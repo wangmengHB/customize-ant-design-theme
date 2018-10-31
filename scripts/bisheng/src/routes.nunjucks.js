@@ -1,102 +1,84 @@
-'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+const chain = require('ramda/src/chain');
+const toReactElement = require('jsonml-to-react-element');
+const exist = require('exist.js');
+const NProgress = require('nprogress');
+const NotFound = require('{{ themePath }}/template/NotFound');
 
-var defaultCollector = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(nextProps) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            return _context.abrupt('return', nextProps);
-
-          case 1:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-
-  return function defaultCollector(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var chain = require('ramda/src/chain');
-var toReactElement = require('jsonml-to-react-element');
-var exist = require('exist.js');
-var NProgress = require('nprogress');
-var NotFound = require('{{ themePath }}/template/NotFound');
-var themeConfig = JSON.parse('{{ themeConfig | safe }}');
+const themeConfig = JSON.parse('{{ themeConfig | safe }}');
 
 function calcPropsPath(dataPath, params) {
-  return typeof dataPath === 'function' ? dataPath(params) : Object.keys(params).reduce(function (path, param) {
-    return path.replace(':' + param, params[param]);
+  return typeof dataPath === 'function' ? dataPath(params) : Object.keys(params).reduce((path, param) => {
+    return path.replace(`:${param}`, params[param]);
   }, dataPath);
 }
 
 function generateUtils(data, props) {
-  var plugins = data.plugins.map(function (pluginTupple) {
+  const plugins = data.plugins.map((pluginTupple) => {
     return pluginTupple[0](pluginTupple[1], props);
   });
-  var converters = chain(function (plugin) {
+  const converters = chain((plugin) => {
     return plugin.converters || [];
   }, plugins);
-  var utils = {
+  const utils = {
     get: exist.get,
     toReactComponent: function toReactComponent(jsonml) {
       return toReactElement(jsonml, converters);
-    }
+    },
   };
-  plugins.map(function (plugin) {
+  plugins.map((plugin) => {
     return plugin.utils || {};
-  }).forEach(function (u) {
+  }).forEach((u) => {
     return Object.assign(utils, u);
   });
   return utils;
 }
 
-module.exports = function getRoutes(data) {
-  function templateWrapper(template) {
-    var dataPath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+async function defaultCollector(nextProps) {
+  return nextProps;
+}
 
-    var Template = require('{{ themePath }}/template' + template.replace(/^\.\/template/, ''));
+module.exports = function getRoutes(data) {
+  function templateWrapper(template, dataPath = '') {
+    // eslint-disable-line import/no-dynamic-require
+    const Template = require(`{{ themePath }}/template${template.replace(/^\.\/template/, '')}`);
 
     return function (nextState, callback) {
-      var propsPath = calcPropsPath(dataPath, nextState.params);
-      var pageData = exist.get(data.markdown, propsPath.replace(/^\//, '').split('/'));
-      var utils = generateUtils(data, nextState);
+      const propsPath = calcPropsPath(dataPath, nextState.params);
+      const pageData = exist.get(data.markdown, propsPath.replace(/^\//, '').split('/'));
+      const utils = generateUtils(data, nextState);
 
-      var collector = (Template.default || Template).collector || defaultCollector;
-      var dynamicPropsKey = nextState.location.pathname;
-      var nextProps = _extends({}, nextState, {
-        themeConfig: themeConfig,
+      const collector = (Template.default || Template).collector || defaultCollector;
+      const dynamicPropsKey = nextState.location.pathname;
+      const nextProps = {
+        ...nextState,
+        themeConfig,
         data: data.markdown,
         picked: data.picked,
-        pageData: pageData,
-        utils: utils
-      });
-      collector(nextProps).then(function (collectedValue) {
+        pageData,
+        utils,
+      };
+      collector(nextProps).then((collectedValue) => {
         try {
-          var Comp = Template.default || Template;
-          Comp[dynamicPropsKey] = _extends({}, nextProps, collectedValue);
+          const Comp = Template.default || Template;
+          Comp[dynamicPropsKey] = {
+            ...nextProps,
+            ...collectedValue,
+          };
           callback(null, Comp);
         } catch (e) {
           console.error(e);
         }
-      }).catch(function (err) {
-        var Comp = NotFound.default || NotFound;
+      }).catch((err) => {
+        const Comp = NotFound.default || NotFound;
         Comp[dynamicPropsKey] = nextProps;
         callback(err === 404 ? null : err, Comp);
       });
     };
   }
 
-  var themeRoutes = JSON.parse('{{ themeRoutes | safe }}');
-  var routes = Array.isArray(themeRoutes) ? themeRoutes : [themeRoutes];
+  const themeRoutes = JSON.parse('{{ themeRoutes | safe }}');
+  const routes = Array.isArray(themeRoutes) ? themeRoutes : [themeRoutes];
 
   function processRoutes(route) {
     if (Array.isArray(route)) {
@@ -113,16 +95,16 @@ module.exports = function getRoutes(data) {
       getComponent: templateWrapper(route.component, route.dataPath || route.path),
       indexRoute: route.indexRoute && Object.assign({}, route.indexRoute, {
         component: undefined,
-        getComponent: templateWrapper(route.indexRoute.component, route.indexRoute.dataPath || route.indexRoute.path)
+        getComponent: templateWrapper(route.indexRoute.component, route.indexRoute.dataPath || route.indexRoute.path),
       }),
-      childRoutes: route.childRoutes && route.childRoutes.map(processRoutes)
+      childRoutes: route.childRoutes && route.childRoutes.map(processRoutes),
     });
   }
 
-  var processedRoutes = processRoutes(routes);
+  const processedRoutes = processRoutes(routes);
   processedRoutes.push({
     path: '*',
-    getComponents: templateWrapper('./template/NotFound')
+    getComponents: templateWrapper('./template/NotFound'),
   });
 
   return processedRoutes;

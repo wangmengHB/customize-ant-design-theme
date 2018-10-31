@@ -1,30 +1,27 @@
-'use strict';
+
 
 require('babel-polyfill');
 require('nprogress/nprogress.css');
 
 /* eslint-disable no-unused-vars */
-var React = require('react');
+const React = require('react');
 /* eslint-enable no-unused-vars */
-var ReactDOM = require('react-dom');
-var ReactRouter = require('react-router');
-var history = require('history');
-var data = require('../src/utils/data.js');
-var createElement = require('../src/utils/create-element');
-var routes = require('{{ routesPath }}')(data);
+const ReactDOM = require('react-dom');
+const ReactRouter = require('react-router');
+const history = require('history');
+const data = require('../src/utils/data.js');
+const createElement = require('../src/utils/create-element');
+const routes = require('{{ routesPath }}')(data);
 
-var _window$location = window.location,
-    pathname = _window$location.pathname,
-    search = _window$location.search,
-    hash = _window$location.hash;
+const { pathname, search, hash } = window.location;
 
-var location = '' + pathname + search + hash;
-var basename = '{{ root }}';
-ReactRouter.match({ routes: routes, location: location, basename: basename }, function () {
-  var router = React.createElement(ReactRouter.Router, {
-    history: ReactRouter.useRouterHistory(history.createHistory)({ basename: basename }),
-    routes: routes,
-    createElement: createElement
+const location = `${pathname}${search}${hash}`;
+const basename = '{{ root }}';
+ReactRouter.match({ routes, location, basename }, () => {
+  const router = React.createElement(ReactRouter.Router, {
+    history: ReactRouter.useRouterHistory(history.createHistory)({ basename }),
+    routes,
+    createElement,
   });
   ReactDOM.render(router, document.getElementById('react-content'));
 });
