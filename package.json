@@ -12,10 +12,6 @@
     "antd"
   ],
   "author": "Meng Wang <wangmeng_hb@163.com>",
-  "bugs": {
-    "url": "https://github.com/wangmengHB/customize-ant-design-theme/issues"
-  },
-  "homepage": "https://github.com/wangmengHB/customize-ant-design-theme#readme",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -208,18 +204,6 @@
     "lint-staged:demo": "cross-env RUN_ENV=DEMO eslint --ext '.md'",
     "debug:bisheng": "node ./node_modules/bisheng/bin/bisheng-build --ssr -c ./site/bisheng.config.js",
     "debug:site": "bisheng build -c ./site/bisheng.config.js"
-  },
-  "lint-staged": {
-    "components/**/*.tsx": [
-      "npm run lint-staged:ts"
-    ],
-    "{tests,site,scripts,components}/**/*.{js,jsx}": [
-      "npm run lint-staged:es"
-    ],
-    "{site,components}/**/*.less": "stylelint --syntax less",
-    "components/*/demo/*.md": [
-      "npm run lint-staged:demo"
-    ]
   },
   "sideEffects": [
     "dist/*",
