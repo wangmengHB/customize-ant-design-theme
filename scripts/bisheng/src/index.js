@@ -103,11 +103,11 @@ exports.start = function start(program) {
   const timefix = 11000;
   compiler.plugin('watch-run', (watching, callback) => {
     watching.startTime += timefix;
-    callback()
+    callback();
   });
   compiler.plugin('done', (stats) => {
-    stats.startTime -= timefix
-  })
+    stats.startTime -= timefix;
+  });
 
   const server = new WebpackDevServer(compiler, serverOptions);
   server.listen(
@@ -134,19 +134,19 @@ exports.build = function build(program, callback) {
     bishengConfig.root,
   );
   const webpackConfig = updateWebpackConfig(getWebpackCommonConfig(), 'build');
-  webpackConfig.plugins.push(new webpack.LoaderOptionsPlugin({
-    minimize: true,
-  }),);
-  webpackConfig.plugins.push(new UglifyJsPlugin({
-    uglifyOptions: {
-      output: {
-        ascii_only: true,
-      },
-    },
-  }));
-  webpackConfig.plugins.push(new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-  }));
+  // webpackConfig.plugins.push(new webpack.LoaderOptionsPlugin({
+  //   minimize: true,
+  // }),);
+  // webpackConfig.plugins.push(new UglifyJsPlugin({
+  //   uglifyOptions: {
+  //     output: {
+  //       ascii_only: true,
+  //     },
+  //   },
+  // }));
+  // webpackConfig.plugins.push(new webpack.DefinePlugin({
+  //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+  // }));
 
 
   const ssrWebpackConfig = Object.assign({}, webpackConfig);
@@ -217,8 +217,7 @@ exports.build = function build(program, callback) {
               process.exit(1);
             }
             const templateData = Object.assign({ root: bishengConfig.root, content }, bishengConfig.htmlTemplateExtraData || {});
-            const fileContent = nunjucks
-                    .renderString(template, templateData);
+            const fileContent = nunjucks.renderString(template, templateData);
             fs.writeFileSync(output, fileContent);
             console.log('Created: ', output);
             resolve();
