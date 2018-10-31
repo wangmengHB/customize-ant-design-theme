@@ -39,6 +39,9 @@ components/**/*.jsx
 !components/**/__tests__/*.js.snap
 /.history
 
+# temp files for build
+scripts/bisheng/tmp/*
+
 # Docs templates
 site/theme/template/IconDisplay/*.js
 site/theme/template/IconDisplay/*.jsx

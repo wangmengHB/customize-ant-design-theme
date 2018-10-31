@@ -99,15 +99,6 @@ module.exports = {
       'react-router-dom': 'ReactRouterDOM',
     };
 
-    if (usePreact) {
-      config.resolve.alias = Object.assign({}, config.resolve.alias, {
-        react: 'preact-compat',
-        'react-dom': 'preact-compat',
-        'create-react-class': 'preact-compat/lib/create-react-class',
-        'react-router': 'react-router',
-      });
-    }
-
     if (isDev) {
       config.devtool = 'source-map';
     }
